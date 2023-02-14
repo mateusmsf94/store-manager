@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 
 const app = express();
 
@@ -11,7 +12,7 @@ app.get('/', (_request, response) => {
 
 app.get('/products', async (req, res) => {
   const allProducts = await productsModel.findAll();
-  res.send(allProducts);
+  res.status(200).send(allProducts);
 });
 
 app.get('/products/:id', async (req, res) => {
