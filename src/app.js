@@ -13,10 +13,7 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-app.get('/products', async (req, res) => {
-  const allProducts = await productModel.findAll();
-  res.status(200).send(allProducts);
-});
+app.get('/products', productController.listProducts);
 
 app.get('/products/:id', async (req, res) => {
   const { id } = req.params;
