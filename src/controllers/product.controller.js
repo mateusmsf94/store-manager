@@ -7,7 +7,6 @@ const createProduct = async (req, res) => {
     res.status(201).json(newProduct);
   } catch (err) {
     if (err.name === 'NameRequired') {
-      console.log(err.message);
       return res.status(400).json({ message: err.message });
     }
 
@@ -22,7 +21,6 @@ const listProducts = async (req, res) => {
     const products = await productService.listProducts();
     res.json(products);
   } catch (error) {
-    console.error(error);
     res.status(500).send('Error retrieving products from database');
   }
 };

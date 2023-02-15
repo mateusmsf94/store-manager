@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const sinon = require('sinon')
-const { productsModel } = require('../../../src/models')
+const { productModel } = require('../../../src/models')
 
 const connection = require('../../../src/models/connection')
 const { products } = require('./mocks/products.model.mock')
@@ -10,7 +10,7 @@ describe('Testes de unidade do model de produtos', function () {
     // Arrange
     sinon.stub(connection, 'execute').resolves([products]);
     // Act
-    const result = await productsModel.findAll();
+    const result = await productModel.findAll();
     // Assert
     expect(result).to.be.deep.equal(products);
   })
@@ -19,10 +19,23 @@ describe('Testes de unidade do model de produtos', function () {
     //Arrange
     sinon.stub(connection, 'execute').resolves([[products[0]]])
     //Act
-    const result = await productsModel.findById(1);
+    const result = await productModel.findById(1);
     //Assert
     expect(result).to.be.deep.equal(products[0])
   })
+
+  it('cadastrando um novo produto', async () => {
+    const insertedId = 1;
+    const insertedName = 'Test Product';
+
+    sinon.stub(connection, 'execute').resolves([{ insertId: insertedId }]);
+    
+    const product = { name: insertedName };
+    const result = await productModel.createProduct(product);
+    
+    expect(result).to.be.an('object');
+    expect(result).to.deep.equal({ id: insertedId, name: insertedName });
+  });
 
   afterEach(function () {
     sinon.restore();
