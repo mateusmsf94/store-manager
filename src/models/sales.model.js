@@ -20,9 +20,12 @@ const createSale = async (id, sales) => {
 
 const findAllIds = async () => {
   const [result] = await connection.execute(
-    'SELECT id FROM sales',
+    'SELECT id FROM products',
   );
-  return result.map((row) => row.id);
+  console.log(result);
+  const ids = result.map((row) => row.id);
+  console.log(ids);
+  return ids;
 };
 
 module.exports = { createId, createSale, findAllIds };

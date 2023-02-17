@@ -48,7 +48,6 @@ describe('addProduct', () => {
       { id: 2, name: 'Product B' },
     ];
 
-    // Stub the productModel.findAll() method to return the expected products
     sinon.stub(productModel, 'findAll').resolves(expectedProducts);
 
     const result = await listProducts();

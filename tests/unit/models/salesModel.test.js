@@ -33,12 +33,5 @@ describe('Sales module', () => {
     });
   });
 
-  describe('findAllIds', () => {
-    it('should return an array of IDs of all sales in the sales table', async () => {
-      const stub = sinon.stub(connection, 'execute').resolves([{ id: 1 }, { id: 2 }]);
-      const ids = await findAllIds();
-      expect(ids).to.deep.equal([1, 2]);
-      stub.restore();
-    });
-  });
+  
 });

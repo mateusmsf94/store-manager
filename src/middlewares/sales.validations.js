@@ -8,7 +8,6 @@ const quantityCheck = (req, res, next) => {
 
 const productIdCheck = (req, res, next) => {
   const sales = req.body;
-  console.log(sales);
   if (sales.every((obj) => !Object.prototype.hasOwnProperty.call(obj, 'productId'))) {
     return res.status(400).json({ message: '"productId" is required' });
   }
