@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 const connection = require('../../../src/models/connection');
-const { createId, createSale, findSales, findSaleById } = require('../../../src/models/sales.model');
+const { createId, createSale, findSales, findSaleById, findAllIds } = require('../../../src/models/sales.model');
 
 describe('Sales module', () => {
   describe('createId', () => {
@@ -92,9 +92,22 @@ describe('Sales module', () => {
       expect(actualSales).to.deep.equal(expectedSales);
 
       executeStub.restore();
-    }
-      
-    );
+    });
 
+  });
+
+  describe('findAllIds', () => {
+    it('should return all ids from the sales table', async () => {
+      const expectedIds = [1, 2, 3, 4, 5];
+
+      const executeStub = sinon.stub(connection, 'execute');
+      executeStub.resolves([[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }]]);
+
+      const actualIds = await findAllIds();
+
+      expect(actualIds).to.deep.equal(expectedIds);
+
+      executeStub.restore();
+    });
   });
 });

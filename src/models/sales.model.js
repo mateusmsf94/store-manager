@@ -23,9 +23,7 @@ const findAllIds = async () => {
   const [result] = await connection.execute(
     'SELECT id FROM products',
   );
-  console.log(result);
   const ids = result.map((row) => row.id);
-  console.log(ids);
   return ids;
 };
 

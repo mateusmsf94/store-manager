@@ -75,7 +75,7 @@ describe("addSale function", () => {
 
     it("should throw an error if an error occurs while retrieving sales from the salesModel", async () => {
       const expectedError = new Error(
-        "Could not retrieve sales from the salesModel"
+        "Sales not found"
       );
 
       const findSalesStub = sinon.stub(salesModel, "findSales");
@@ -137,4 +137,5 @@ describe("addSale function", () => {
     });
 
   });
+  
 });
