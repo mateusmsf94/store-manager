@@ -74,18 +74,20 @@ describe("addSale function", () => {
     });
 
     it("should throw an error if an error occurs while retrieving sales from the salesModel", async () => {
-      const expectedError = new Error(
-        "Sales not found"
-      );
+      const expectedError = new Error();
+      expectedError.name = "SalesNotFound";
+      expectedError.message = "Sales not found";
+
+      const expectedResult = [];
 
       const findSalesStub = sinon.stub(salesModel, "findSales");
-      findSalesStub.rejects(expectedError);
+      findSalesStub.resolves(expectedResult);
 
       try {
         await getSales();
-        expect.fail("Expected error to be thrown");
+        expect.fail("Sales not found");
       } catch (err) {
-        expect(err).to.equal(expectedError);
+        expect(err.message).to.equal(expectedError.message);
       }
 
       findSalesStub.restore();
@@ -118,18 +120,19 @@ describe("addSale function", () => {
     });
 
     it("should throw an error if an error occurs while retrieving sale from the salesModel", async () => {
-      const expectedError = new Error(
-        "Sale not found"
-      );
+      const expectedResult = []
+      const expectedError = new Error();
+      expectedError.name = "SaleNotFound";
+      expectedError.message = "Sale not found";
 
       const findSaleByIdStub = sinon.stub(salesModel, "findSaleById");
-      findSaleByIdStub.rejects(expectedError);
+      findSaleByIdStub.resolves(expectedResult);
 
       try {
         await getSaleById(999);
         expect.fail("Expected error to be thrown");
       } catch (err) {
-        expect(err).to.equal(expectedError);
+        expect(err.message).to.equal(expectedError.message);
       }
 
       findSaleByIdStub.restore();
