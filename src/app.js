@@ -10,6 +10,7 @@ const { quantityCheck,
 const salesController = require('./controllers/sales.controller');
 const productController = require('./controllers/product.controller');
 const { productModel } = require('./models');
+const { nameCheck, minLength } = require('./middlewares/product.validations');
 
 // não remova esse endpoint, é para o avaliador funcionar
 app.get('/', (_request, response) => {
@@ -26,6 +27,8 @@ app.get('/products/:id', async (req, res) => {
   } 
   res.send(product);
 });
+
+app.put('/products/:id', nameCheck, minLength, productController.updateProduct);
 
 app.post('/products', productController.createProduct);
 
