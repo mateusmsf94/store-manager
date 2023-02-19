@@ -29,6 +29,10 @@ app.get('/products/:id', async (req, res) => {
 
 app.post('/products', productController.createProduct);
 
+app.get('/sales', salesController.getSales);
+
+app.get('/sales/:id', salesController.getSaleById);
+
 app.post('/sales', productIdCheck, quantityCheck, quantityIsPositive, salesController.createSale);
 // não remova essa exportação, é para o avaliador funcionar
 // você pode registrar suas rotas normalmente, como o exemplo acima
