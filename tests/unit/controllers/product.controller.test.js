@@ -4,6 +4,7 @@ const sinonChai = require("sinon-chai");
 const {
   createProduct,
   listProducts,
+  updateProduct
 } = require("../../../src/controllers/product.controller");
 const productService = require("../../../src/services/product.service");
 
@@ -104,4 +105,46 @@ describe("Product Controller", () => {
       );
     }
   });
+
+  it("deve atualizar o produto", async () => {
+    const updatedProduct = { name: "Test Product" };
+    const req = {
+      params: { id: 1 },
+      body: updatedProduct,
+    };
+    const res = {
+      json: sinon.stub().returns(updatedProduct),
+    };
+
+    sinon.stub(productService, "updateProduct").resolves(updatedProduct);
+
+    await updateProduct(req, res);
+
+    expect(res.json).to.have.been.calledWith(updatedProduct);
+
+  });
+
+  it('deve retornar 404 status e mensagem de erro quando o produto não for encontrado', async () => {
+    const updatedProduct = { name: "Test Product" };
+    const req = {
+      params: { id: 1 },
+      body: updatedProduct,
+    };
+    const res = {
+      json: sinon.stub().returnsThis(),
+      status: sinon.stub().returnsThis(),
+      send: sinon.stub().returns("Product not found"),
+    };
+
+    sinon.stub(productService, "updateProduct").rejects({ name: 'ProductNotFound', message: 'Product not found' });
+
+
+    try {
+      await updateProduct(req, res);
+    } catch (err) {
+      expect(res.status).to.have.been.calledWith(404);
+      expect(res.send).to.have.been.calledWith("Product not found");
+    }
+  });
+    
 });

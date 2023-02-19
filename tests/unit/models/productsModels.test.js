@@ -40,4 +40,20 @@ describe('Testes de unidade do model de produtos', function () {
   afterEach(function () {
     sinon.restore();
   })
+
+  describe('Atualizando um produto', () => {
+    it('atualizando um produto', async () => {
+    const updatedId = 1;
+    const updatedName = 'Test Product';
+
+    sinon.stub(connection, 'execute').resolves([{ insertId: updatedId }]);
+    
+    const product = { name: updatedName };
+    const result = await productModel.updateProduct(updatedId, product);
+    
+    expect(result).to.be.an('object');
+    expect(result).to.deep.equal({ id: updatedId, name: updatedName });
+    });
+    
+  });
 })
